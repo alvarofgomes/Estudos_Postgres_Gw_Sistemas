@@ -1,0 +1,35 @@
+create table funcionarios_curso(
+
+	funcionario_id INTEGER,
+	curso_id INTEGER,
+	PRIMARY KEY(funcionario_id, curso_id),
+
+	FOREIGN KEY(funcionario_id)
+	REFERENCES funcionarios(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+
+	FOREIGN KEY(curso_id)
+	REFERENCES curso(id)
+
+);
+
+SELECT * FROM funcionarios;
+SELECT * FROM funcionarios_curso;
+SELECT * FROM curso;
+SELECT * FROM aluno;
+
+INSERT INTO funcionarios_curso (funcionario_id,curso_id) VALUES (1,1),(2,2);
+
+SELECT 
+funcionarios.nome AS "Nome do professor", curso.nome AS "Nome do curso",aluno.nome AS nome_do_aluno
+FROM funcionarios
+JOIN funcionarios_curso ON funcionarios_curso.funcionario_id = funcionarios.id
+JOIN curso ON curso.id = funcionarios_curso.curso_id
+JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
+JOIN curso ON curso.id = aluno_curso.curso_id;
+
+SELECT aluno.nome AS nome_do_aluno, curso.nome AS nome_do_curso 
+FROM aluno 
+JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
+JOIN curso ON curso.id = aluno_curso.curso_id;
