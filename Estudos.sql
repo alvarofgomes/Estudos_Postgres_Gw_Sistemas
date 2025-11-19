@@ -187,3 +187,33 @@ SELECT aluno.id AS aluno_id, aluno.nome AS "Nome do aluno", curso.id AS curso_id
 FROM aluno
 JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
 JOIN curso ON curso.id = aluno_curso.curso_id;
+
+CREATE TABLE funcionarios(
+id SERIAL PRIMARY KEY,
+matricula VARCHAR(255),
+nome VARCHAR(255),
+sobrenome VARCHAR(2550)
+);
+
+INSERT INTO funcionarios (matricula,nome,sobrenome) VALUES
+('M007','Diogo', 'Oliveira');
+
+SELECT * FROM funcionarios;
+
+-- ORDER BY
+
+SELECT * FROM funcionarios ORDER BY 4 DESC, nome DESC, 2;
+
+SELECT aluno.id AS aluno_id, aluno.nome AS "Nome do aluno", curso.id AS curso_id, curso.nome AS "Nome do Curso" FROM aluno
+JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
+JOIN curso ON curso.id = aluno_curso.curso_id
+ORDER BY "Nome do aluno";
+
+-- LIMIT
+
+SELECT * FROM funcionarios ORDER BY nome LIMIT 5;
+
+SELECT * FROM funcionarios ORDER BY id LIMIT 5 OFFSET 1;
+
+
+
