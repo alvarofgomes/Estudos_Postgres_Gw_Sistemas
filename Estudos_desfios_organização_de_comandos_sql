@@ -1,10 +1,40 @@
+INSERT INTO aluno (nome) VALUES ('João'), ('Nico'),('Vinicius');
+INSERT INTO curso (id,nome) VALUES (1,'CSS'),(2,'POO'),(3,'JavaScript');
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (1,2), (3,1);
+
+SELECT * FROM aluno;
+SELECT * FROM aluno_curso;
+SELECT * FROM curso;
+SELECT * FROM funcionarios;
+SELECT * FROM funcionarios_curso;
+
+SELECT aluno.nome AS "Nome do aluno", curso.nome "Nome do curso" FROM aluno
+JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
+JOIN curso ON curso.id = aluno_curso.curso_id;
+
+CREATE TABLE funcionarios(
+id SERIAL PRIMARY KEY,
+matricula VARCHAR(255),
+nome VARCHAR(255),
+sobrenome VARCHAR(2550)
+);
+
+INSERT INTO funcionarios (matricula,nome,sobrenome) VALUES
+('M001','Diogo', 'Mascarenhas'),
+('M002','Vinicius', 'Dias'),
+('M003','Nico', 'Steppat'),
+('M004','João', 'Roberto'),
+('M005','Diogo', 'Mascarenhas'),
+('M006','Alberto', 'Martins'),
+('M007','Diogo', 'Oliveira');
+
 create table funcionarios_curso(
 
-	funcionario_id INTEGER,
+	funcionarios_id INTEGER,
 	curso_id INTEGER,
-	PRIMARY KEY(funcionario_id, curso_id),
+	PRIMARY KEY(funcionarios_id, curso_id),
 
-	FOREIGN KEY(funcionario_id)
+	FOREIGN KEY(funcionarios_id)
 	REFERENCES funcionarios(id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
@@ -14,22 +44,11 @@ create table funcionarios_curso(
 
 );
 
-SELECT * FROM funcionarios;
-SELECT * FROM funcionarios_curso;
-SELECT * FROM curso;
-SELECT * FROM aluno;
-
-INSERT INTO funcionarios_curso (funcionario_id,curso_id) VALUES (1,1),(2,2);
-
-SELECT 
-funcionarios.nome AS "Nome do professor", curso.nome AS "Nome do curso",aluno.nome AS nome_do_aluno
+INSERT INTO funcionarios_curso (funcionarios_id,curso_id) VALUES (1,1),(2,2);
+-- mostrando profesores que ministram cursos e são vistos por alunos
+SELECT funcionarios.nome AS "Nome do professor", curso.nome AS "Nome do curso",aluno.nome AS "Nome do aluno" 
 FROM funcionarios
-JOIN funcionarios_curso ON funcionarios_curso.funcionario_id = funcionarios.id
+JOIN funcionarios_curso ON funcionarios_curso.funcionarios_id = funcionarios.id
 JOIN curso ON curso.id = funcionarios_curso.curso_id
-JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
-JOIN curso ON curso.id = aluno_curso.curso_id;
-
-SELECT aluno.nome AS nome_do_aluno, curso.nome AS nome_do_curso 
-FROM aluno 
-JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
-JOIN curso ON curso.id = aluno_curso.curso_id;
+JOIN aluno_curso ON curso.id = aluno_curso.curso_id
+JOIN aluno ON aluno.id = aluno_curso.aluno_id;
