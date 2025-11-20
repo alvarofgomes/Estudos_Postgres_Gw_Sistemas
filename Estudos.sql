@@ -213,7 +213,22 @@ ORDER BY "Nome do aluno";
 
 SELECT * FROM funcionarios ORDER BY nome LIMIT 5;
 
+-- OFFSET serve para pular linhas nesse caso vai ser apartir do 1
+
 SELECT * FROM funcionarios ORDER BY id LIMIT 5 OFFSET 1;
 
+-- COUNT - retorna a quantidade de registros
+SELECT COUNT(id) FROM funcionarios;
 
+-- SUM - retorna a soma dos valores
+SELECT COUNT(id),SUM(id) FROM funcionarios;
+
+-- MAX - retorna o maior valor dos registros
+SELECT COUNT(id),MAX(id) FROM funcionarios;
+
+-- MIN - retorna o menor valor dos registros
+SELECT COUNT(id),MIN(id) FROM funcionarios;
+
+-- AVG - retorna a média dos registros
+SELECT COUNT(id),AVG(id) FROM funcionarios;
 
