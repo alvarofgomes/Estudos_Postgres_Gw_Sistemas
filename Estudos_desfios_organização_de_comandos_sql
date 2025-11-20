@@ -52,3 +52,33 @@ JOIN funcionarios_curso ON funcionarios_curso.funcionarios_id = funcionarios.id
 JOIN curso ON curso.id = funcionarios_curso.curso_id
 JOIN aluno_curso ON curso.id = aluno_curso.curso_id
 JOIN aluno ON aluno.id = aluno_curso.aluno_id;
+
+-- Exercício 1 — Listar apenas professores que têm alunos
+
+SELECT funcionarios.nome AS "Nome do professor", curso.nome AS "Nome do curso",aluno.nome AS "Nome do aluno" 
+FROM funcionarios
+JOIN funcionarios_curso ON funcionarios_curso.funcionarios_id = funcionarios.id
+JOIN curso ON curso.id = funcionarios_curso.curso_id
+JOIN aluno_curso ON curso.id = aluno_curso.curso_id
+JOIN aluno ON aluno.id = aluno_curso.aluno_id
+GROUP BY "Nome do professor","Nome do curso","Nome do aluno";
+
+-- Exercício 2 — Quantos alunos cada professor tem
+
+SELECT funcionarios.nome AS "Nome do professor", COUNT(aluno.id) AS "Quantidade de alunos cadastrados no curso" 
+FROM funcionarios 
+JOIN funcionarios_curso ON funcionarios_curso.funcionarios_id = funcionarios.id
+JOIN curso ON curso.id = funcionarios_curso.curso_id
+JOIN aluno_curso ON curso.id = aluno_curso.curso_id
+JOIN aluno ON aluno.id = aluno_curso.aluno_id
+GROUP BY "Nome do professor";
+
+-- Exercício 3 — Professores sem alunos
+
+SELECT funcionarios.nome AS Nome_do_professor, curso.nome AS Nome_do_curso, aluno.nome AS Nome_do_aluno
+FROM funcionarios
+LEFT JOIN funcionarios_curso ON funcionarios_curso.funcionarios_id = funcionarios.id
+LEFT JOIN curso ON curso.id = funcionarios_curso.curso_id
+LEFT JOIN aluno_curso ON curso.id = aluno_curso.curso_id
+LEFT JOIN aluno ON aluno.id = aluno_curso.aluno_id
+WHERE curso.id IS NOT NULL AND aluno.id IS NULL AND funcionarios.id IS NOT NULL;
