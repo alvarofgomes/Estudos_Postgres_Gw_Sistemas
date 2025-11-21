@@ -1,0 +1,46 @@
+CREATE DATABASE alura2;
+ 
+CREATE TABLE academico.aluno (
+    id SERIAL PRIMARY KEY,
+    primeiro_nome VARCHAR(255) NOT NULL,
+    ultimo_nome VARCHAR(255) NOT NULL,
+    data_nascimento DATE NOT NULL
+);
+
+CREATE TABLE academico.categoria (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE academico.curso (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    categoria_id INTEGER NOT NULL REFERENCES academico.categoria(id)
+);
+
+CREATE TABLE academico.aluno_curso (
+    aluno_id INTEGER NOT NULL REFERENCES academico.aluno(id),
+    curso_id INTEGER NOT NULL REFERENCES academico.curso(id),
+    PRIMARY KEY (aluno_id, curso_id)
+);
+
+CREATE SCHEMA academico;
+
+DROP TABLE aluno,categoria,curso,aluno_curso;
+
+
+DROP TABLE a;
+CREATE TEMPORARY TABLE a (
+    coluna1 VARCHAR(255) NOT NULL CHECK(coluna1 <> ''),
+    coluna2 VARCHAR(255) NOT NULL,
+    UNIQUE (coluna1, coluna2)
+);
+
+INSERT INTO a VALUES ('a','c');
+SELECT * FROM teste;
+
+ALTER TABLE a RENAME TO teste;
+
+ALTER TABLE teste RENAME coluna1 TO primeira_coluna;
+ALTER TABLE teste RENAME coluna2 TO segunda_coluna;
+
