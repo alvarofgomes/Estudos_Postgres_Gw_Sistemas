@@ -232,3 +232,17 @@ SELECT COUNT(id),MIN(id) FROM funcionarios;
 -- AVG - retorna a média dos registros
 SELECT COUNT(id),AVG(id) FROM funcionarios;
 
+
+-- DISTINCT - utilizado para não repetir dados
+-- DISTINCT - não funciona com função de agregação
+SELECT DISTINCT nome FROM funcionarios ORDER BY nome;
+
+-- GROUP BY - quando quiser usar função de agregação
+SELECT nome,sobrenome, COUNT(id) FROM funcionarios GROUP BY nome,sobrenome ORDER BY nome;
+
+-- HAVING - utilizar quando tiver utilizando funções de agrupamentos
+SELECT curso.nome, COUNT(aluno.id) FROM curso
+LEFT JOIN aluno_curso ON aluno_curso.curso_id = curso.id
+LEFT JOIN aluno ON aluno.id = aluno_curso.aluno_id
+GROUP BY 1 
+HAVING COUNT(aluno.id) > 0;
