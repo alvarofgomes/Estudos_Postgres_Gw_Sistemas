@@ -1,8 +1,7 @@
 CREATE TABLE clientes ( 
  	id_cliente SERIAL PRIMARY KEY,  
  	nome VARCHAR(255) NOT NULL,  
- 	cpf CHAR(11) UNIQUE,  
-	cnpj CHAR(14) UNIQUE
+ 	cpfcnpj CHAR(14) UNIQUE NOT NULL
 ); 
 
 CREATE TABLE enderecos ( 
@@ -21,33 +20,18 @@ CREATE TABLE produtos (
  	nome VARCHAR(255) NOT NULL,  
  	peso DECIMAL(10,2) NOT NULL,  
  	volume DECIMAL(10,2) NOT NULL,  
- 	valorFrete DECIMAL(10,2) NOT NULL,  
+ 	valorFrete DECIMAL(10,2) NOT NULL  
 ); 
 
 CREATE TABLE entregas ( 
- 	id_entrega INT PRIMARY KEY,  
- 	status ENUM('entregue','pendente','caminho') NOT NULL,  
- 	frete DECIMAL(10,2) NOT NULL,  
+ 	id_entrega SERIAL PRIMARY KEY,  
+ 	status VARCHAR(50) NOT NULL,  
+ 	frete DECIMAL(10,2) NOT NULL,
+	clientes_id INTEGER REFERENCES clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
-CREATE TABLE clientes_entregas(
-	clientes_id INTEGER,
-	entregas_id INTEGER,
-	PRIMARY KEY(clientes_id,entregas_id),
-
-	FOREIGN KEY(clientes_id)
-	REFERENCES clientes(id_cliente),
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-
-	FOREIGN KEY(entregas_id)
-	REFERENCES entregas(id_entrega)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
+CREATE TABLE itens_entregas (
+    id_item SERIAL PRIMARY KEY,
+	entrega_id INTEGER REFERENCES entregas(id_entrega),
+	produto_id INTEGER REFERENCES produtos(id_produto)
 );
-
-
-ALTER TABLE endereco ADD FOREIGN KEY(id_cliente) REFERENCES cliente (id_cliente)
-ALTER TABLE entrega ADD FOREIGN KEY(id_cliente) REFERENCES cliente (id_cliente)
-ALTER TABLE item_entrega ADD FOREIGN KEY(id_entrega) REFERENCES entrega (id_entrega)
-ALTER TABLE item_entrega ADD FOREIGN KEY(id_produto) REFERENCES produto (id_produto)
